@@ -23,8 +23,9 @@ def comprimento(frase: str):
     
     palavras = frase.split()
     comprimento_medio = sum(len(palavra) for palavra in palavras) / len(palavras)
+    comprimento_medio_formatado = "{:.1f}".format(comprimento_medio)
 
-    return {'comprimento médio': comprimento_medio}
+    return {'comprimento médio': float(comprimento_medio_formatado)}
 
 @app.post('/words/')
 def palavras(frase1: str, frase2: str):

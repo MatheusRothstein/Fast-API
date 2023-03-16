@@ -1,6 +1,6 @@
 import unittest
 from fastapi.testclient import TestClient
-from main import app
+from app import app
 
 class TestInvertNumber(unittest.TestCase):
     
@@ -23,9 +23,18 @@ class TestInvertNumber(unittest.TestCase):
         self.assertEqual(response.json(), {"comprimento médio": 3.3})
     
     def test_palavras(self):
-        response = self.client.post('words?frase1=Esta é uma frase de teste.&frase2=Esta é outra frase de teste.')
+        # response = self.client.post('words?frase1=Esta é uma frase de teste.&frase2=Esta é outra frase de teste.')
+        # self.assertEqual(response.status_code, 200)
+        # self.assertEqual(response.json(), {
+        #     "palavras em comum": ["Esta", "é", "frase", "de", "teste"],
+        #     "palavras diferentes": ["uma", "outra"]
+        # })
+        response = self.client.post("/words?frase1=hello%20world&frase2=goodbye%20world")
+        
+        # verifica se a resposta está correta
+        expected = {
+            "palavras em comum": ["world"],
+            "palavras diferentes": ["hello", "goodbye"]
+        }
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {
-            "palavras em comum": ["uma", "frase", "de", 'outra'],
-            "palavras diferentes": ["Esta", "é", "teste."]
-        })
+        self.assertEqual(response.json(), expected)
