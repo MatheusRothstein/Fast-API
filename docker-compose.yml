@@ -4,4 +4,9 @@ services:
   app:
     build: .
     ports:
-      - '8000:8000'
+      - "8000:80"
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:alpine"

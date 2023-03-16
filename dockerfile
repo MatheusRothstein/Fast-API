@@ -1,8 +1,11 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
-COPY .app/ /app
+WORKDIR /app
 
-RUN pip install -r app/requirements.txt
+COPY requirements.txt .
+COPY app app
 
-CMD ['uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', '8000']
+RUN pip install -r requirements.txt
 
+ENV MODULE_NAME=app.main
+ENV APP=app/main.py
